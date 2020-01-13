@@ -12,11 +12,6 @@ pipeline {
         sh "mvn clean package"
       }
     }
-    stage('analysis') {
-      steps {
-        archiveArtifacts artifacts: 'zap-report.html', fingerprint: true
-      }
-    }
     stage('Publish to S3') {
       steps {
         sh "aws s3 cp /var/lib/jenkins/workspace/dvja/target/dvja-1.0-SNAPSHOT.war s3://ako20-buildartifacts-f1cutinalkuf/dvja-1.0-SNAPSHOT.war"
