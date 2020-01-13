@@ -11,14 +11,15 @@ pipeline {
         git 'https://github.com/ajlanghorn/dvja.git'
         sh "mvn clean package"
       }
-    stage('Check dependencies') {
-      steps {
-        dependencyCheck additionalArguments: '', odcInstallation: 'Dependency-Check'
-      }
     }
     stage('Publish to S3') {
       steps {
-        sh "aws s3 cp /var/lib/jenkins/workspace/dvja/target/dvja-1.0-SNAPSHOT.war s3://ako20-buildartifacts-f1cutinalkuf/dvja-1.0-SNAPSHOT.war"
+        sh "aws s3 cp /var/lib/jenkins/workspace/dvja/target/dvja-1.0-SNAPSHOT.war s3://CHANGE-ME/dvja-1.0-SNAPSHOT.war"
+      }
+    }
+    stage('Check dependencies') {
+      steps {
+        dependencyCheck additionalArguments: '', odcInstallation: 'Dependency-Check'
       }
     }
     stage('Tidy up') {
@@ -26,6 +27,11 @@ pipeline {
         cleanWs()
       }
     }
-   }
-  } 
+  }
+}
+
+stage('Check dependencies') {
+steps {
+dependencyCheck additionalArguments: '', odcInstallation: 'Dependency-Check'
+}
 }
