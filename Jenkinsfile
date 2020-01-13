@@ -4,17 +4,17 @@ pipeline {
   tools {
     maven "apache-maven-3.6.3"
   }
-  post {
-    always {
-        archiveArtifacts artifacts: 'zap-report.html', fingerprint: true
-    }
-  }
 
   stages {
     stage('Build') {
       steps {
         git 'https://github.com/ajlanghorn/dvja.git'
         sh "mvn clean package"
+      }
+    }
+    stage('analysis') {
+      steps {
+        archiveArtifacts artifacts: 'zap-report.html', fingerprint: true
       }
     }
     stage('Publish to S3') {
