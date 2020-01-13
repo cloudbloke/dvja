@@ -11,11 +11,6 @@ pipeline {
         git 'https://github.com/ajlanghorn/dvja.git'
         sh "mvn clean package"
       }
-    stage('Check dependencies') {
-      steps {
-        dependencyCheck additionalArguments: '', odcInstallation: 'Dependency-Check'
-      }
-  }
 
     }
     stage('Publish to S3') {
